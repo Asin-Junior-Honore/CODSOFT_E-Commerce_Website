@@ -42,7 +42,7 @@ const HomePage: React.FC = () => {
     if (token) {
       try {
         await addToCart(product, product.quantity, token);
-        toast.success(`${product.title} added to cart!`);
+        //toast.success(`${product.title} added to cart!`);
       } catch (error) {
         toast.error(`Failed to add ${product.title} to cart.`);
       }

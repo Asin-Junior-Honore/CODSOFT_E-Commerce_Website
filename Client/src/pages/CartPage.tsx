@@ -17,7 +17,7 @@ const CartPage: React.FC = () => {
                     console.error('Token not found');
                     return;
                 }
-                const response = await axios.get('http://localhost:4000/auth/cart', {
+                const response = await axios.get('https://codsoft-e-commerce-website-server.onrender.com/auth/cart', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -47,7 +47,7 @@ const CartPage: React.FC = () => {
                 console.error('Token not found');
                 return;
             }
-            await axios.delete(`http://localhost:4000/auth/cart/${productId}`, {
+            await axios.delete(`https://codsoft-e-commerce-website-server.onrender.com/auth/cart/${productId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -78,7 +78,7 @@ const CartPage: React.FC = () => {
             const amountInKobo = totalPrice;
 
             const response = await axios.post(
-                'http://localhost:4000/auth/acceptpayment',
+                'https://codsoft-e-commerce-website-server.onrender.com/auth/acceptpayment',
                 { email: usermail, amount: amountInKobo },
                 {
                     headers: {

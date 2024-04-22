@@ -37,15 +37,17 @@ const ProductsPage: React.FC = () => {
 
   const allCategories = productData ? [...new Set(productData.map(product => product.category))] : [];
 
+
   const handleAddToCart = (product: Product) => {
     const { token } = cookies;
+
     if (token) {
       addToCart(product, quantities[product.id], token)
         .then(() => {
-          toast.success(`Added ${product.title} to cart!`); // Success toast when added to cart
+        //toast.success(`Added ${product.title} to cart!`); // Success toast when added to cart
         })
-        .catch(error => {
-          toast.error('Error adding to cart'); // Error toast if there is a problem
+        .catch((error) => {
+          toast.error('Error adding to cart'); // Error toast if there's a problem
           console.error(error);
         });
     } else {
@@ -54,20 +56,19 @@ const ProductsPage: React.FC = () => {
   };
 
   const incrementQuantity = (productId: number) => {
-    setQuantities(prevQuantities => ({
+    setQuantities((prevQuantities) => ({
       ...prevQuantities,
-      [productId]: prevQuantities[productId] + 1,
+      [productId]: (prevQuantities[productId] || 0) + 1,
     }));
-    toast.info(`Increased quantity`); 
   };
 
   const decrementQuantity = (productId: number) => {
-    setQuantities(prevQuantities => ({
+    setQuantities((prevQuantities) => ({
       ...prevQuantities,
-      [productId]: Math.max(1, prevQuantities[productId] - 1),
+      [productId]: Math.max(1, (prevQuantities[productId] || 1) - 1),
     }));
-    toast.info(`Decreased quantity`);
   };
+
 
   return (
     <div className="container mx-auto px-4 py-8">
