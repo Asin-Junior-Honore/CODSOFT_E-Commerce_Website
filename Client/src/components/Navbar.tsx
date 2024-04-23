@@ -15,15 +15,23 @@ const CartIcon: React.FC<{ count: number }> = ({ count }) => (
     </Link>
 );
 
-const UserIcon: React.FC<{ username: string; onLogout: () => void }> = ({ username, onLogout }) => (
+const UserIcon: React.FC<{ username: string; token: string; onLogout: () => void }> = ({ username, onLogout, token }) => (
     <>
         <div className="flex items-center space-x-2">
             <AiOutlineUser className="text-xl text-white" />
             <span className="text-white">{username}</span>
         </div>
-        <button onClick={onLogout} className="bg-transparent lg:block hidden hover:bg-gray-600 text-white font-semibold hover:text-white py-1 px-2 border border-white rounded">
-            Logout
-        </button>
+        {
+            token && (
+                <button
+                    onClick={onLogout}
+                    className="bg-transparent lg:block hidden hover:bg-gray-600 text-white font-semibold hover:text-white py-1 px-2 border border-white rounded"
+                >
+                    Logout
+                </button>
+            )
+        }
+
     </>
 );
 
@@ -42,7 +50,7 @@ const Navbar: React.FC = () => {
                     console.error("Token not found: PLEASE LOGIN FIRST!");
                     return;
                 }
-                const response = await axios.get('https://codsoft-e-commerce-website-server.onrender.com/auth/user-details', {
+                const response = await axios.get('http://localhost:4000/auth/user-details', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -64,7 +72,7 @@ const Navbar: React.FC = () => {
                 console.error('Token not found: PLEASE LOGIN FIRST!');
                 return;
             }
-            await axios.post('https://codsoft-e-commerce-website-server.onrender.com/auth/logout', {}, {
+            await axios.post('http://localhost:4000/auth/logout', {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -101,19 +109,23 @@ const Navbar: React.FC = () => {
                             <Link to="/" className="text-white hover:text-gray-300" onClick={closeMenu}>Home</Link>
                             <Link to="/products" className="text-white hover:text-gray-300" onClick={closeMenu}>All Products</Link>
                             <Link to="/cart" className="text-white  hover:text-gray-300" onClick={closeMenu}>My Cart</Link>
-                            <button onClick={() => {
-                                handleLogout()
-                                closeMenu()
-                            }} className="bg-transparent lg:hidden  hover:bg-gray-600 text-white font-semibold hover:text-white py-1 px-2 border border-white rounded">
-                                Logout
-                            </button>
+                            {
+                                cookies.token && (
+                                    <button onClick={() => {
+                                        handleLogout()
+                                        closeMenu()
+                                    }} className="bg-transparent lg:hidden  hover:bg-gray-600 text-white font-semibold hover:text-white py-1 px-2 border border-white rounded">
+                                        Logout
+                                    </button>
+                                )
+                            }
 
 
                         </div>
                         <CartIcon count={cartItems} />
                     </div>
                     <div className="flex items-center space-x-4">
-                        <UserIcon username={username} onLogout={handleLogout} />
+                        <UserIcon username={username} onLogout={handleLogout} token={cookies.token} />
                     </div>
                     <div className="lg:hidden flex">
                         <button onClick={() => setIsMenuOpen(!isMenuOpen)}>

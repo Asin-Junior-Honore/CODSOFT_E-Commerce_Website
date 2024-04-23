@@ -30,7 +30,7 @@ const Signup = () => {
     const onSubmit = async (data: SignupForm) => {
         try {
             setLoading(true);
-            const response = await axios.post('https://codsoft-e-commerce-website-server.onrender.com/auth/signup', data);
+            const response = await axios.post('http://localhost:4000/auth/signup', data);
 
             toast.success('Signup successful! Redirecting to login...', {
                 autoClose: 2000, // Toast duration

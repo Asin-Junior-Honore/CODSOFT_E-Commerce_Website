@@ -30,7 +30,7 @@ const LoginPage: React.FC = () => {
   const onSubmit = async (data: LoginForm) => {
     try {
       setLoading(true);
-      const response = await axios.post('https://codsoft-e-commerce-website-server.onrender.com/auth/login', data);
+      const response = await axios.post('http://localhost:4000/auth/login', data);
       const { token } = response.data;
       setCookie('token', token, { path: '/' });
       toast.success('Login successful! Redirecting...', {

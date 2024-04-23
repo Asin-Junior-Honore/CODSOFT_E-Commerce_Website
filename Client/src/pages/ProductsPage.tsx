@@ -44,7 +44,7 @@ const ProductsPage: React.FC = () => {
     if (token) {
       addToCart(product, quantities[product.id], token)
         .then(() => {
-        //toast.success(`Added ${product.title} to cart!`); // Success toast when added to cart
+          //toast.success(`Added ${product.title} to cart!`); // Success toast when added to cart
         })
         .catch((error) => {
           toast.error('Error adding to cart'); // Error toast if there's a problem
