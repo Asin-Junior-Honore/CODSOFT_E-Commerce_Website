@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 import { Link, useNavigate } from 'react-router-dom';
 
 const CartIcon: React.FC<{ count: number }> = ({ count }) => (
-    <Link to="/cart" className="relative text-white hover:text-gray-300">
+    <Link to="/cart" className="relative text-white hover:text-gray-400">
         <AiOutlineShoppingCart className="text-xl" />
         {count > 0 && (
             <span className="bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2">
