@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export interface Product {
@@ -59,7 +59,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             toast.error('Failed to add product to cart');
         }
     };
-
     const updateCartItem = async (productId: number, quantity: number, token: string) => {
         try {
             await axios.patch(
@@ -77,7 +76,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 );
                 return updatedCart;
             });
-            toast.success('Updated cart item quantity');
+
         } catch (error) {
             console.error('Error updating cart item:', error);
             toast.error('Failed to update cart item');
@@ -93,7 +92,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return (
         <CartContext.Provider value={contextValue}>
             {children}
-            <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick draggable pauseOnHover />
         </CartContext.Provider>
     );
 };

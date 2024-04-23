@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useProductData } from '../contexts/ProductDataContext';
 import { useCart, Product } from '../contexts/CartContext';
 import { useCookies } from 'react-cookie';
-import { toast } from 'react-toastify'; // Import the toast library
+import { toast } from 'react-toastify';
 
 const ProductsPage: React.FC = () => {
   const { addToCart } = useCart();
@@ -44,14 +44,14 @@ const ProductsPage: React.FC = () => {
     if (token) {
       addToCart(product, quantities[product.id], token)
         .then(() => {
-          //toast.success(`Added ${product.title} to cart!`); // Success toast when added to cart
+
         })
         .catch((error) => {
-          toast.error('Error adding to cart'); // Error toast if there's a problem
+          toast.error('Error adding to cart');
           console.error(error);
         });
     } else {
-      toast.error('You need to be logged in to add items to the cart'); // Error toast if no token found
+      toast.error('You need to be logged in to add items to the cart');
     }
   };
 

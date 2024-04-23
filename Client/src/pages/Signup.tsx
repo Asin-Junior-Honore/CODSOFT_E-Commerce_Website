@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { BiLoaderAlt } from 'react-icons/bi';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const schema = yup.object().shape({
@@ -91,7 +91,7 @@ const Signup = () => {
                         <Link to="/login" className="text-blue-500">Login here</Link>
                     </p>
                 </div>
-                <ToastContainer /> {/* Toast notifications */}
+
             </div>
         </>
     );

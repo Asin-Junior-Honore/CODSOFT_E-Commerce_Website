@@ -8,13 +8,15 @@ import CartPage from './pages/CartPage';
 import Signup from './pages/Signup';
 import PrivateRoutes from './utils/PrivateRoutes';
 import Footer from './components/Footer';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App: React.FC = () => {
   return (
     <div>
       <Router>
         <Navbar />
-
+        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick draggable pauseOnHover />
         <div className='bg-gray-200'>
           <Routes>
             <Route path="/" element={<HomePage />} />

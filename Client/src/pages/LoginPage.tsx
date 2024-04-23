@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiLoaderAlt } from 'react-icons/bi';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Required CSS for react-toastify
 
 const schema = yup.object().shape({
@@ -87,7 +87,6 @@ const LoginPage: React.FC = () => {
           <Link to="/signup" className="text-blue-500">Signup here</Link>
         </p>
       </div>
-      <ToastContainer /> {/* Ensure the ToastContainer is included */}
     </div>
   );
 };
