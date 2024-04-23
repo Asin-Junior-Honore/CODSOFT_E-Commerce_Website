@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiLoaderAlt } from 'react-icons/bi';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Required CSS for react-toastify
+import 'react-toastify/dist/ReactToastify.css';
 
 const schema = yup.object().shape({
   username: yup.string().required('Username is required'),
@@ -34,13 +34,13 @@ const LoginPage: React.FC = () => {
       const { token } = response.data;
       setCookie('token', token, { path: '/' });
       toast.success('Login successful! Redirecting...', {
-        autoClose: 2000, // Toast duration
+        autoClose: 2000,
       });
-      setTimeout(() => navigate('/'), 2000); // Redirect after toast
+      setTimeout(() => navigate('/'), 2000);
     } catch (error) {
       console.error('Login failed:', error);
       toast.error('Login failed. Please check your credentials and try again.', {
-        autoClose: 5000, // Toast duration for error messages
+        autoClose: 5000,
       });
     } finally {
       setLoading(false);

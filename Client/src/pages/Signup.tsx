@@ -33,14 +33,15 @@ const Signup = () => {
             const response = await axios.post('http://localhost:4000/auth/signup', data);
 
             toast.success('Signup successful! Redirecting to login...', {
-                autoClose: 2000, // Toast duration
+                autoClose: 2000,
             });
             console.log(response.data);
 
-            setTimeout(() => navigate('/login'), 2000); // Redirect to login page after toast
-        } catch (error) {
-            toast.error('Signup failed. Please try again.', {
-                autoClose: 5000, // Toast duration for error messages
+            setTimeout(() => navigate('/login'), 2000);
+        } catch (error: any) {
+            console.error(error)
+            toast.error(`Sorry ${error.response.data.message}`, {
+                autoClose: 5000,
             });
         } finally {
             setLoading(false);
