@@ -31,20 +31,39 @@ const Signup = () => {
         try {
             setLoading(true);
             const response = await axios.post('http://localhost:4000/auth/signup', data);
-            toast.success(`${response?.data.message} Redirecting to login...`, {
-                autoClose: 2000,
-            });
-            console.log(response.data);
-            setTimeout(() => navigate('/login'), 2000);
-        } catch (error: any) {
-            //  console.error(error)
-            toast.error(`Sorry ${error?.response.data.message}`, {
+
+            if (response?.data?.message) {
+                toast.success(`${response.data.message} Redirecting to login...`, {
+                    autoClose: 2000,
+                });
+                setTimeout(() => navigate('/login'), 2000);
+            } else {
+                toast.success("Signup successful. Redirecting to login...", {
+                    autoClose: 2000,
+                });
+                setTimeout(() => navigate('/login'), 2000);
+            }
+
+            console.log(response);
+        } catch (error) {
+            let errorMessage = "An unexpected error occurred. Please try again.";
+            if (axios.isAxiosError(error) && error.response) {
+                if (error.response.data?.message) {
+                    errorMessage = error.response.data.message;
+                } else if (typeof error.response.data === 'string') {
+                    errorMessage = error.response.data;
+                }
+            }
+
+            toast.error(`Sorry, ${errorMessage}`, {
                 autoClose: 5000,
             });
         } finally {
             setLoading(false);
         }
     };
+
+
     return (
         <>
             <div className="min-h-screen flex items-center justify-center px-5 lg:px-0">
