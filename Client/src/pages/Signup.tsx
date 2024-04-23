@@ -31,15 +31,13 @@ const Signup = () => {
         try {
             setLoading(true);
             const response = await axios.post('http://localhost:4000/auth/signup', data);
-
-            toast.success('Signup successful! Redirecting to login...', {
+            toast.success(`${response.data.message} Redirecting to login...`, {
                 autoClose: 2000,
             });
             console.log(response.data);
-
             setTimeout(() => navigate('/login'), 2000);
         } catch (error: any) {
-            console.error(error)
+            //  console.error(error)
             toast.error(`Sorry ${error.response.data.message}`, {
                 autoClose: 5000,
             });
@@ -47,7 +45,6 @@ const Signup = () => {
             setLoading(false);
         }
     };
-
     return (
         <>
             <div className="min-h-screen flex items-center justify-center px-5 lg:px-0">
