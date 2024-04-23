@@ -32,37 +32,21 @@ const Signup = () => {
             setLoading(true);
             const response = await axios.post('http://localhost:4000/auth/signup', data);
 
-            if (response?.data?.message) {
-                toast.success(`${response.data.message} Redirecting to login...`, {
-                    autoClose: 2000,
-                });
-                setTimeout(() => navigate('/login'), 2000);
-            } else {
-                toast.success("Signup successful. Redirecting to login...", {
-                    autoClose: 2000,
-                });
-                setTimeout(() => navigate('/login'), 2000);
-            }
+            toast.success('Signup successful! Redirecting to login...', {
+                autoClose: 2000, // Toast duration
+            });
+            console.log(response.data);
 
-            console.log(response);
+            setTimeout(() => navigate('/login'), 2000);
         } catch (error) {
-            let errorMessage = "An unexpected error occurred. Please try again.";
-            if (axios.isAxiosError(error) && error.response) {
-                if (error.response.data?.message) {
-                    errorMessage = error.response.data.message;
-                } else if (typeof error.response.data === 'string') {
-                    errorMessage = error.response.data;
-                }
-            }
-
-            toast.error(`Sorry, ${errorMessage}`, {
+            console.error(error)
+            toast.error("Sorry something went wrong please try again", {
                 autoClose: 5000,
             });
         } finally {
             setLoading(false);
         }
     };
-
 
     return (
         <>
