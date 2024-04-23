@@ -31,7 +31,6 @@ const UserIcon: React.FC<{ username: string; token: string; onLogout: () => void
                 </button>
             )
         }
-
     </>
 );
 

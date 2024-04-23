@@ -30,7 +30,6 @@ export const useProductData = () => {
 export const ProductDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [productData, setProductData] = useState<Product[]>([]);
   const [_, setIndividualProductCategories] = useState<ProductCategories>({});
-
   const fetchProductData = async () => {
     try {
       const response = await fetch('https://fakestoreapi.com/products');

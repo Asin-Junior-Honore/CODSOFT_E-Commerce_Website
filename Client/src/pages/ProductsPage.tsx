@@ -3,6 +3,7 @@ import { useProductData } from '../contexts/ProductDataContext';
 import { useCart, Product } from '../contexts/CartContext';
 import { useCookies } from 'react-cookie';
 import { toast } from 'react-toastify';
+import { FaSpinner } from 'react-icons/fa';
 
 const ProductsPage: React.FC = () => {
   const { addToCart } = useCart();
@@ -44,7 +45,6 @@ const ProductsPage: React.FC = () => {
     if (token) {
       addToCart(product, quantities[product.id], token)
         .then(() => {
-
         })
         .catch((error) => {
           toast.error('Error adding to cart');
@@ -73,35 +73,47 @@ const ProductsPage: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold mb-4">Products</h2>
-      <ul className="flex mb-4 flex-wrap">
-        <li className={`mr-4 cursor-pointer ${selectedCategory === null ? 'font-bold' : ''}`} onClick={() => handleCategoryClick(null)}>All Products</li>
-        {allCategories.map(category => (
-          <li key={category} className={`mr-4 cursor-pointer ${selectedCategory === category ? 'font-bold text-blue-500' : ''}`} onClick={() => handleCategoryClick(category)}>
-            {category}
-          </li>
-        ))}
-      </ul>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-        {filteredProducts.map(product => (
-          <div key={product.id} className="bg-white shadow-md border-2 flex justify-between flex-col rounded-md overflow-hidden">
-            <div className="lg:w-[400px] h-[400px]">
-              <img src={product.image} alt={product.title} className="w-full h-full" />
-            </div>
-            <div className="p-4">
-              <h2 className="text-lg font-semibold">{product.title}</h2>
-              <p className="text-gray-800 font-bold text-xl mt-2">${product.price.toFixed(2)}</p>
-              <div className="flex justify-between items-center mt-4">
-                <button className="mt-4 bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900" onClick={() => handleAddToCart(product)}>Add to Cart</button>
-                <div className="flex items-center">
-                  <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded-l-md text-lg" onClick={() => decrementQuantity(product.id)}>-</button>
-                  <span className="bg-gray-100 text-lg px-4 py-2">{quantities[product.id]}</span>
-                  <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded-r-md text-lg" onClick={() => incrementQuantity(product.id)}>+</button>
-                </div>
-              </div>
-            </div>
+      {
+        productData.length == 0 ? <>
+          <div className="flex justify-center items-center border-4 h-[300px]">
+            <FaSpinner className="animate-spin text-3xl mr-2 text-black" />
+            <h3>Loading all ProductCategories</h3>
           </div>
-        ))}
-      </div>
+        </> :
+          <>
+            <ul className="flex mb-4 flex-wrap">
+              <li className={`mr-4 cursor-pointer ${selectedCategory === null ? 'font-bold' : ''}`} onClick={() => handleCategoryClick(null)}>All Products</li>
+              {allCategories.map(category => (
+                <li key={category} className={`mr-4 cursor-pointer ${selectedCategory === category ? 'font-bold text-blue-500' : ''}`} onClick={() => handleCategoryClick(category)}>
+                  {category}
+                </li>
+              ))}
+            </ul>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+              {filteredProducts.map(product => (
+                <div key={product.id} className="bg-white shadow-md border-2 flex justify-between flex-col rounded-md overflow-hidden">
+                  <div className="lg:w-[400px] h-[400px]">
+                    <img src={product.image} alt={product.title} className="w-full h-full" />
+                  </div>
+                  <div className="p-4">
+                    <h2 className="text-lg font-semibold">{product.title}</h2>
+                    <p className="text-gray-800 font-bold text-xl mt-2">${product.price.toFixed(2)}</p>
+                    <div className="flex justify-between items-center mt-4">
+                      <button className="mt-4 bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900" onClick={() => handleAddToCart(product)}>Add to Cart</button>
+                      <div className="flex items-center">
+                        <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded-l-md text-lg" onClick={() => decrementQuantity(product.id)}>-</button>
+                        <span className="bg-gray-100 text-lg px-4 py-2">{quantities[product.id]}</span>
+                        <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded-r-md text-lg" onClick={() => incrementQuantity(product.id)}>+</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+      }
+
+
     </div>
   );
 };

@@ -5,6 +5,8 @@ import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import hero_image from "../assets/mern-landingpage-hero.jpg"
+import { FaSpinner } from 'react-icons/fa';
 
 interface DisplayedProduct extends Product {
   quantity: number;
@@ -13,7 +15,6 @@ interface DisplayedProduct extends Product {
 const HomePage: React.FC = () => {
   const { addToCart } = useCart();
   const productData = useProductData();
-  const [loading, setLoading] = useState<boolean>(true);
   const [displayedProducts, setDisplayedProducts] = useState<DisplayedProduct[]>([]);
   const [cookies] = useCookies(['token']);
 
@@ -25,7 +26,6 @@ const HomePage: React.FC = () => {
         quantity: 1,
       }));
       setDisplayedProducts(initialDisplayedProducts);
-      setLoading(false);
     }
   }, [productData]);
 
@@ -42,7 +42,6 @@ const HomePage: React.FC = () => {
     if (token) {
       try {
         await addToCart(product, product.quantity, token);
-        //toast.success(`${product.title} added to cart!`);
       } catch (error) {
         toast.error(`Failed to add ${product.title} to cart.`);
       }
@@ -72,8 +71,8 @@ const HomePage: React.FC = () => {
         <div>
           <div className="relative h-[40rem]">
             <img
-              src="https://media.istockphoto.com/id/1347626309/photo/latina-female-using-desktop-computer-with-clothing-online-web-store-to-choose-and-buy-clothes.jpg?s=612x612&w=0&k=20&c=SGKPpmCvxMFYld_4MXuSUBFmAcHylKNp2kJgWuszmgw="
-              alt=""
+              src={hero_image}
+              alt="asinhonore_heroimage"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 flex items-center justify-center bg-[rgba(0,0,0,0.5)] bg-opacity-75">
@@ -92,45 +91,54 @@ const HomePage: React.FC = () => {
       </section>
       <section className="container mx-auto py-12 px-3">
         <h1 className="text-3xl font-bold mb-8">Featured Products</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-x-8 gap-y-12">
-          {loading ? (
-            <h1>Loading...</h1>
+        <div>
+          {displayedProducts.length === 0 ? (
+            <div className="flex justify-center items-center border-4 h-[300px]">
+              <FaSpinner className="animate-spin text-3xl mr-2 text-black" />
+              <h3>Loading available products...</h3>
+            </div>
           ) : (
-            displayedProducts.map((product, index) => (
-              <div key={product.id} className="bg-gray-100 border-2 flex flex-col justify-between rounded-lg overflow-hidden shadow-md">
-                <div className="lg:w-[400px] h-[400px]">
-                  <img src={product.image} alt={product.title} className="w-full h-full" />
-                </div>
-                <div className="p-4">
-                  <h2 className="text-lg font-semibold">{product.title}</h2>
-                  <p className="text-gray-800 font-bold text-xl mt-2">${product.price.toFixed(2)}</p>
-                  <div className="flex justify-between items-center mt-4">
-                    <button
-                      className={`bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 ${!cookies.token ? 'cursor-not-allowed opacity-50' : ''}`}
-                      onClick={() => handleAddToCart(product)}
-                      disabled={!cookies.token}
-                    >
-                      {cookies.token ? 'Add to Cart' : 'Login to Add to Cart'}
-                    </button>
-                    <div className="flex items-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-x-8 gap-y-12">
+              {displayedProducts.map((product, index) => (
+                <div
+                  key={product.id}
+                  className="bg-gray-100 border-2 flex flex-col justify-between rounded-lg overflow-hidden shadow-md"
+                >
+                  <div className="lg:w-[400px] h-[400px]">
+                    <img src={product.image} alt={product.title} className="w-full h-full" />
+                  </div>
+                  <div className="p-4">
+                    <h2 className="text-lg font-semibold">{product.title}</h2>
+                    <p className="text-gray-800 font-bold text-xl mt-2">${product.price.toFixed(2)}</p>
+                    <div className="flex justify-between items-center mt-4">
                       <button
-                        className="bg-gray-200 text-gray-800 px-4 py-2 rounded-l-md text-lg"
-                        onClick={() => handleDecrement(index)}
+                        className={`bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 ${!cookies.token ? 'cursor-not-allowed opacity-50' : ''
+                          }`}
+                        onClick={() => handleAddToCart(product)}
+                        disabled={!cookies.token}
                       >
-                        -
+                        {cookies.token ? 'Add to Cart' : 'Login to Add to Cart'}
                       </button>
-                      <div className="bg-gray-100 text-lg px-4 py-2">{product.quantity}</div>
-                      <button
-                        className="bg-gray-200 text-gray-800 px-4 py-2 rounded-r-md text-lg"
-                        onClick={() => handleIncrement(index)}
-                      >
-                        +
-                      </button>
+                      <div className="flex items-center">
+                        <button
+                          className="bg-gray-200 text-gray-800 px-4 py-2 rounded-l-md text-lg"
+                          onClick={() => handleDecrement(index)}
+                        >
+                          -
+                        </button>
+                        <div className="bg-gray-100 text-lg px-4 py-2">{product.quantity}</div>
+                        <button
+                          className="bg-gray-200 text-gray-800 px-4 py-2 rounded-r-md text-lg"
+                          onClick={() => handleIncrement(index)}
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
       </section>

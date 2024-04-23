@@ -157,4 +157,23 @@ router.get("/user-details", authMiddleware, async (req, res) => {
 
 router.post("/acceptpayment", initializePayment.acceptPayment);
 
+router.delete("/cart", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const result = await CartItem.deleteMany({ user: userId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "No items found in cart" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "All items removed from cart successfully" });
+  } catch (error) {
+    console.error("Error deleting all items from cart:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 export { router as authroutes };

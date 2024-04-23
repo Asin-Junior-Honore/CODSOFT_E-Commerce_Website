@@ -9,6 +9,7 @@ const CartPage: React.FC = () => {
     const [usermail, setUsermail] = useState("");
     const [totalPrice, setTotalPrice] = useState<number | null>(null);
     const [paymentLoading, setPaymentLoading] = useState(false);
+    const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
     useEffect(() => {
         const fetchCartProducts = async () => {
             try {
@@ -103,6 +104,31 @@ const CartPage: React.FC = () => {
         }
     };
 
+    const handleDeleteAll = async () => {
+        try {
+            const token = cookies.token;
+            if (!token) {
+                console.error('Token not found');
+                return;
+            }
+
+            setLoadingDelete(true);
+
+            await axios.delete('http://localhost:4000/auth/cart', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            setCartProducts([]);
+            setTotalPrice(0);
+            setLoadingDelete(false);
+        } catch (error) {
+            console.error('Error deleting all items from cart:', error);
+            setLoadingDelete(false);
+        }
+    };
+
     return (
         <div className="container mx-auto px-4 py-8">
             <h2 className="text-3xl font-bold mb-4">Shopping Cart</h2>
@@ -117,8 +143,9 @@ const CartPage: React.FC = () => {
                     <FaTrash className="w-8 h-8 ml-2" />
                 </div>
             ) : (
+
                 <div>
-                    <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mapping-userscart">
                         {cartProducts.map((item, index) => (
                             <li key={index} className="bg-white shadow-md p-4 rounded-md">
                                 <div className="mb-4 flex justify-between items-start">
@@ -131,14 +158,30 @@ const CartPage: React.FC = () => {
                                 </div>
                                 <div className='grid grid-cols-2'>
                                     <p className="font-semibold">{item.product.name}</p>
-                                    <p className="text-gray-600 text-lg">Quantity: {item.quantity}</p>
+                                    <p className="text-gray-600 text-lg text-end">Quantity: {item.quantity}</p>
                                     <p className="text-gray-600 text-lg mt-6">Price: ${item.product.price.toFixed(2)}</p>
-                                    <p className="text-gray-600 text-lg mt-6">Total: ${(item.product.price * item.quantity).toFixed(2)}</p>
+                                    <p className="text-gray-600 text-lg mt-6 text-end">Total: ${(item.product.price * item.quantity).toFixed(2)}</p>
                                 </div>
                             </li>
                         ))}
                     </ul>
-                    <div className="mt-8">
+
+                    <div className='mt-6 deleteall-logic'>
+                        <button
+                            onClick={handleDeleteAll}
+                            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+                            disabled={loadingDelete}
+                        >
+                            {loadingDelete ? (
+                                <FaSpinner className="animate-spin w-5 h-5 inline-block mr-2" />
+                            ) : (
+                                <FaTrash className="inline-block mr-2" />
+                            )}
+                            {loadingDelete ? 'Deleting All...' : 'Delete All'}
+                        </button>
+                    </div>
+
+                    <div className="mt-8 proceedtopayment-logic">
                         {totalPrice !== null && (
                             <p className="text-xl mb-5 font-semibold">Total Cost: ${totalPrice.toFixed(2)}</p>
                         )}
