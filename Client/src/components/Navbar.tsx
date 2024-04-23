@@ -22,13 +22,24 @@ const UserIcon: React.FC<{ username: string; token: string; onLogout: () => void
             <span className="text-white">{username}</span>
         </div>
         {
-            token && (
+            token ? (
                 <button
                     onClick={onLogout}
                     className="bg-transparent lg:block hidden hover:bg-gray-600 text-white font-semibold hover:text-white py-1 px-2 border border-white rounded"
                 >
                     Logout
                 </button>
+            ) : (
+
+                <>
+                    <a
+                        href="/login"
+                        className="bg-transparent lg:block hidden hover:bg-gray-600 text-white font-semibold hover:text-white py-1 px-2 border border-white rounded"
+                    >
+                        Login
+                    </a>
+                </>
+
             )
         }
     </>
