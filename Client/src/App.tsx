@@ -28,7 +28,6 @@ const App: React.FC = () => {
             <Route path="/signup" element={<Signup />} />
           </Routes>
         </div>
-
         <Footer />
       </Router>
     </div>
