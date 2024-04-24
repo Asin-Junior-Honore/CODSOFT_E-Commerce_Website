@@ -44,7 +44,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         try {
             const { id, title, image, price } = product;
             await axios.post(
-                'https://codsoft-e-commerce-website-server.onrender.com/auth/cart/add',
+                'https://codsoft-e-commerce-website-server.vercel.app/auth/cart/add',
                 { productId: id, quantity, productName: title, productImage: image, productPrice: price },
                 {
                     headers: {
@@ -62,7 +62,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const updateCartItem = async (productId: number, quantity: number, token: string) => {
         try {
             await axios.patch(
-                `https://codsoft-e-commerce-website-server.onrender.com/auth/cart/update/${productId}`,
+                `https://codsoft-e-commerce-website-server.vercel.app/auth/cart/update/${productId}`,
                 { quantity },
                 {
                     headers: {
