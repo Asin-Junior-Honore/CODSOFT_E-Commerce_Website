@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BiLoaderAlt } from 'react-icons/bi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 const schema = yup.object().shape({
   username: yup.string().required('Username is required'),
@@ -26,6 +27,11 @@ const LoginPage: React.FC = () => {
     resolver: yupResolver(schema),
   });
   const [loading, setLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false); // State to toggle password visibility
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible); // Toggle the password field type
+  };
 
   const onSubmit = async (data: LoginForm) => {
     try {
@@ -68,7 +74,7 @@ const LoginPage: React.FC = () => {
       <div className="w-[28rem] mx-auto bg-white p-4 border rounded-lg shadow-md">
         <h2 className="text-center text-2xl font-semibold mb-4">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-4">
+          <div className="mb-4 relative"> {/* Add relative positioning for the eye icon */}
             <input
               {...register('username')}
               placeholder="Username"
@@ -81,15 +87,22 @@ const LoginPage: React.FC = () => {
               <p className="text-red-500 mt-1">{errors.username.message}</p>
             )}
           </div>
-          <div className="mb-4">
+          <div className="mb-4 relative"> {/* Update for password visibility toggle */}
             <input
               {...register('password')}
               placeholder="Password"
-              type="password"
+              type={passwordVisible ? 'text' : 'password'} // Toggle field type based on visibility state
               className="w-full px-4 py-2 rounded border bg-gray-100"
               focus:outline-none
               focus:border-blue-500
             />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 text-blue-500 text-2xl"
+            >
+              {passwordVisible ? <AiOutlineEye />   :   <AiOutlineEyeInvisible />}
+            </button>
             {errors.password && (
               <p className="text-red-500 mt-1">{errors.password.message}</p>
             )}

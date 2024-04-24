@@ -76,7 +76,7 @@ const CartPage: React.FC = () => {
 
             setPaymentLoading(true);
 
-            const amountInKobo = totalPrice;
+            const amountInKobo = totalPrice * 1000;
 
             const response = await axios.post(
                 'https://codsoft-e-commerce-website-server.onrender.com/auth/acceptpayment',
@@ -89,7 +89,7 @@ const CartPage: React.FC = () => {
                 }
             );
 
-            console.log('Response Data:', response.data);
+            //console.log('Response Data:', response.data);
             setPaymentLoading(false);
 
             const authorizationUrl = response.data?.data?.authorization_url;
