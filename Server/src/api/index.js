@@ -27,7 +27,7 @@ mongoose
 app.get("/", (req, res) => {
   res
     .status(200)
-    .send("<h1>Welcome Asin Honore the server is up and running bro!🧑‍💻</h1>"); // Response for root endpoint
+    .send("<h1>Welcome Asin Honore the server is up and running bro!🧑‍💻</h1>");
 });
 
 app.use("/auth", authroutes);

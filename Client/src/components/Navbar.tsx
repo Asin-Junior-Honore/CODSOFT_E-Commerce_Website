@@ -115,21 +115,34 @@ const Navbar: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-4 justify-center">
                     <div className="flex items-center space-x-4 relative">
-                        <div className={isMenuOpen ? 'absolute top-[2.6rem] z-20 left-0 px-6 space-y-3 bg-gray-800 py-5 rounded-md flex flex-col' : 'hidden lg:flex lg:space-x-3'}>
+                        <div className={isMenuOpen ? 'absolute top-[2.6rem] z-20 right-[-5rem] flex  px-6 space-y-3 bg-gray-800 whitespace-nowrap py-5 rounded-md flex-col' : 'hidden lg:flex lg:space-x-3'}>
                             <Link to="/" className="text-white hover:text-gray-300" onClick={closeMenu}>Home</Link>
-                            <Link to="/products" className="text-white hover:text-gray-300" onClick={closeMenu}>All Products</Link>
+                            <Link to="/products" className="text-white  hover:text-gray-300" onClick={closeMenu}>All Products</Link>
                             <Link to="/cart" className="text-white  hover:text-gray-300" onClick={closeMenu}>My Cart</Link>
                             {
-                                cookies.token && (
-                                    <button onClick={() => {
-                                        handleLogout()
-                                        closeMenu()
-                                    }} className="bg-transparent lg:hidden bg-red-500 hover:bg-gray-600 text-white font-semibold hover:text-white py-1 px-2 border border-white rounded">
+                                cookies.token ? (
+                                    <button
+                                        onClick={() => {
+                                            handleLogout();
+                                            closeMenu();
+                                        }}
+                                        className="bg-transparent lg:hidden hover:bg-gray-600 text-white font-semibold hover:text-white py-1 px-2 border border-white rounded"
+                                    >
                                         Logout
                                     </button>
+                                ) : (
+
+                                    <a
+
+                                        href="/login"
+
+                                    >
+                                        <button className="bg-transparent lg:hidden block hover:bg-gray-600 text-white font-semibold w-full hover:text-white py-1 px-2 border border-white rounded">
+                                            Login
+                                        </button>
+                                    </a>
                                 )
                             }
-
 
                         </div>
                         <CartIcon count={cartItems} />
