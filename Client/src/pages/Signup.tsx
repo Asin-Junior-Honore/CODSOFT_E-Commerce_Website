@@ -31,7 +31,7 @@ const Signup = () => {
         try {
             setLoading(true);
             const response = await axios.post(
-                'https://codsoft-e-commerce-website-server-3kgj1mv22.vercel.app/auth/signup',
+                'https://codsoft-e-commerce-website-server.onrender.com/auth/signup',
                 data
             );
 

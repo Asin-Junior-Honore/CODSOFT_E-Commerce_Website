@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
                     console.error("Token not found: PLEASE LOGIN FIRST!");
                     return;
                 }
-                const response = await axios.get('https://codsoft-e-commerce-website-server.vercel.app/auth/user-details', {
+                const response = await axios.get('https://codsoft-e-commerce-website-server.onrender.com/auth/user-details', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -82,7 +82,7 @@ const Navbar: React.FC = () => {
                 console.error('Token not found: PLEASE LOGIN FIRST!');
                 return;
             }
-            await axios.post('https://codsoft-e-commerce-website-server.vercel.app/auth/logout', {}, {
+            await axios.post('https://codsoft-e-commerce-website-server.onrender.com/auth/logout', {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

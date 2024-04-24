@@ -31,7 +31,7 @@ const LoginPage: React.FC = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        'https://codsoft-e-commerce-website-server.vercel.app/auth/login',
+        'https://codsoft-e-commerce-website-server.onrender.com/auth/login',
         data
       );
 
