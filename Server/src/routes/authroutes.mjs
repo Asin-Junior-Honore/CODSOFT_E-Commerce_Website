@@ -94,14 +94,9 @@ router.get("/cart", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;
 
-    // Find the user's email
     const user = await User.findById(userId);
     const userEmail = user.email;
-
-    // Find all cart items for the authenticated user
     const cartItems = await CartItem.find({ user: userId });
-
-    // Send the cart items and user's email in the response
     res.status(200).json({ cartItems, userEmail });
   } catch (error) {
     console.error("Error fetching cart items:", error);

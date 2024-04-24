@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon src/index.js"
+    "devStart": "nodemon src/api/index.js"
   },
   "author": "",
   "license": "ISC",
