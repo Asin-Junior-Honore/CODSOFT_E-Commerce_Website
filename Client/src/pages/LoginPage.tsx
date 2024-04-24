@@ -30,16 +30,32 @@ const LoginPage: React.FC = () => {
   const onSubmit = async (data: LoginForm) => {
     try {
       setLoading(true);
-      const response = await axios.post('https://codsoft-e-commerce-website-server.onrender.com/auth/login', data);
-      const { token } = response.data;
-      setCookie('token', token, { path: '/' });
-      toast.success('Login successful! Redirecting...', {
+      const response = await axios.post(
+        'https://codsoft-e-commerce-website-server.onrender.com/auth/login',
+        data
+      );
+
+      const { token, message } = response.data; // Extract token and message from response
+      setCookie('token', token, { path: '/' }); // Store token in cookies
+      
+      // Show success message
+      toast.success(message || 'Login successful! Redirecting...', {
         autoClose: 2000,
       });
-      setTimeout(() => navigate('/'), 2000);
-    } catch (error) {
-      console.error('Login failed:', error);
-      toast.error('Login failed. Please check your credentials and try again.', {
+      
+      setTimeout(() => navigate('/'), 2000); // Redirect to homepage after 2 seconds
+    } catch (error: unknown) {
+      let errorMessage = "Login failed. Please check your credentials and try again.";
+
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.data?.message) {
+          errorMessage = error.response.data.message;
+        } else if (typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        }
+      }
+
+      toast.error(`Sorry, ${errorMessage}`, {
         autoClose: 5000,
       });
     } finally {
@@ -57,7 +73,9 @@ const LoginPage: React.FC = () => {
               {...register('username')}
               placeholder="Username"
               type="text"
-              className="w-full px-4 py-2 rounded border bg-gray-100 focus:outline-none focus:border-blue-500"
+              className="w-full px-4 py-2 rounded border bg-gray-100"
+              focus:outline-none
+              focus:border-blue-500
             />
             {errors.username && (
               <p className="text-red-500 mt-1">{errors.username.message}</p>
@@ -68,7 +86,9 @@ const LoginPage: React.FC = () => {
               {...register('password')}
               placeholder="Password"
               type="password"
-              className="w-full px-4 py-2 rounded border bg-gray-100 focus:outline-none focus:border-blue-500"
+              className="w-full px-4 py-2 rounded border bg-gray-100"
+              focus:outline-none
+              focus:border-blue-500
             />
             {errors.password && (
               <p className="text-red-500 mt-1">{errors.password.message}</p>
@@ -76,7 +96,8 @@ const LoginPage: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-700"
+            className="w-full bg-gray-900 text-white py-2 px-4 rounded"
+            hover:bg-blue-700
             disabled={isSubmitting || loading}
           >
             {loading ? <BiLoaderAlt className="animate-spin inline-block mr-2" /> : 'Login'}
