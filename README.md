@@ -1,7 +1,9 @@
 # Codsoft E-Commerce Website 🌐
+
 Welcome to the Codsoft E-Commerce website project! This is a full-stack MERN (MongoDB, Express.js, React, Node.js) application with integrated payment processing and user authentication. In this documentation, I'll explain the architecture, setup, and features of the project.
 
 ## Table of Contents
+
 1. [Project Overview](#project-overview)
 2. [Technology Stack](#technology-stack)
 3. [Features](#features)
@@ -16,9 +18,11 @@ Welcome to the Codsoft E-Commerce website project! This is a full-stack MERN (Mo
 ---
 
 ## Project Overview 📋
+
 This project is an e-commerce platform designed for an internship task at Codsoft. The goal was to create a comprehensive shopping experience with user registration, authentication, product management, and payment integration. Users can browse products, add them to a shopping cart, and complete purchases using Paystack as the payment gateway.
 
 ## Technology Stack 🛠️
+
 - **Backend**: Node.js with Express.js
 - **Frontend**: React with TypeScript
 - **Database**: MongoDB with Mongoose
@@ -26,6 +30,7 @@ This project is an e-commerce platform designed for an internship task at Codsof
 - **Payment Gateway**: Paystack
 
 ## Features 🎯
+
 - **User Authentication**: Secure login and signup using JWT.
 - **Product Management**: Admin users can add, edit, and delete products.
 - **Shopping Cart**: Users can add products to their cart, adjust quantities, and remove items.
@@ -34,14 +39,17 @@ This project is an e-commerce platform designed for an internship task at Codsof
 - **Error Handling**: Robust error handling with clear messages for users and developers.
 
 ## Installation and Setup ⚙️
+
 Follow these steps to set up the project locally:
 
-1. **Clone the Repository**: 
+1. **Clone the Repository**:
+
    ```bash
    git clone https://github.com/your-username/codsoft-ecommerce.git
    ```
 
 2. **Backend Setup**:
+
    - Navigate to the backend folder:
      ```bash
      cd backend
@@ -61,6 +69,7 @@ Follow these steps to set up the project locally:
      ```
 
 3. **Frontend Setup**:
+
    - Navigate to the frontend folder:
      ```bash
      cd ../frontend
@@ -79,9 +88,10 @@ Follow these steps to set up the project locally:
    - The frontend should be running on `http://localhost:3000`.
 
 ## Backend Overview 🖥️
+
 The backend is built with Express.js and uses MongoDB for data storage. It has the following features:
 
-- **Routes**: 
+- **Routes**:
   - `/auth`: Routes for user authentication (signup, login, logout).
   - `/products`: Routes for product management.
   - `/cart`: Routes for managing the shopping cart.
@@ -91,6 +101,7 @@ The backend is built with Express.js and uses MongoDB for data storage. It has t
 - **Error Handling**: Centralized error handling to ensure clear error messages.
 
 ## Frontend Overview 🖥️
+
 The frontend is built with React and TypeScript. It has the following features:
 
 - **Components**:
@@ -108,6 +119,7 @@ The frontend is built with React and TypeScript. It has the following features:
 - **State Management**: Managed using React's built-in state management.
 
 ## Payment Integration 💳
+
 The payment gateway used in this project is Paystack. The integration is done in the backend, and the following features are implemented:
 
 - **Initiate Payment**: When a user checks out, a payment request is sent to Paystack.
@@ -115,6 +127,7 @@ The payment gateway used in this project is Paystack. The integration is done in
 - **Secure Transactions**: Sensitive information is not stored in the backend, ensuring secure transactions.
 
 ## Authentication and Authorization 🔐
+
 Authentication is done using JWT. The following features are implemented:
 
 - **Signup**: Users can create an account with a username and password.
@@ -123,6 +136,7 @@ Authentication is done using JWT. The following features are implemented:
 - **Logout**: Users can log out, invalidating their JWT.
 
 ## Contributing 🤝
+
 Contributions are welcome! To contribute to this project, follow these steps:
 
 1. **Fork the Repository**: Create your own fork of the project.
@@ -134,7 +148,9 @@ Contributions are welcome! To contribute to this project, follow these steps:
 4. **Submit a Pull Request**: Once your changes are complete, submit a pull request for review.
 
 ## Contact Information 📧
+
 For questions or further information about this project, please contact:
+
 - **Email**: support@codsoft.com
 - **Website**: [www.codsoft.com](https://www.codsoft.com)
 
