@@ -35,8 +35,7 @@ const Signup = () => {
             toast.success('Signup successful! Redirecting to login...', {
                 autoClose: 2000, // Toast duration
             });
-            console.log(response.data);
-
+            console.log(response);
             setTimeout(() => navigate('/login'), 2000);
         } catch (error) {
             console.error(error)
