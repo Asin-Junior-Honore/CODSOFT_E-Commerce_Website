@@ -10,13 +10,28 @@ import PrivateRoutes from './utils/PrivateRoutes';
 import Footer from './components/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import FeaturedImage from './components/FeaturedImage';
 const App: React.FC = () => {
   return (
     <div>
       <Router>
+        <FeaturedImage
+          title="Asin-Honore | E-commerce Store 🧑‍💻"
+          description="Discover the latest products in our MERN e-commerce store!"
+          url="https://asinhonore-mern-e-commerce-app-remote.netlify.app/"
+          siteName="E-commerce Store"
+          customImage="https://asinhonore-mern-e-commerce-app-remote.netlify.app/assets/mern-landingpage-hero.jpg"
+        />
         <Navbar />
-        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick draggable pauseOnHover />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          draggable
+          pauseOnHover
+        />
         <div className='bg-gray-200'>
           <Routes>
             <Route path="/" element={<HomePage />} />
