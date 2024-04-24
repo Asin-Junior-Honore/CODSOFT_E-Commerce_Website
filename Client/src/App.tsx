@@ -15,13 +15,7 @@ const App: React.FC = () => {
   return (
     <div>
       <Router>
-        <FeaturedImage
-          title="Asin-Honore | E-commerce Store 🧑‍💻"
-          description="Discover the latest products in our MERN e-commerce store!"
-          url="https://asinhonore-mern-e-commerce-app-remote.netlify.app/"
-          siteName="E-commerce Store"
-          customImage="https://asinhonore-mern-e-commerce-app-remote.netlify.app/assets/mern-landingpage-hero.jpg"
-        />
+        <FeaturedImage />
         <Navbar />
         <ToastContainer
           position="top-right"
