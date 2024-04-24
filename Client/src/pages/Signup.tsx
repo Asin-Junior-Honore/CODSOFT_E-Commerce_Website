@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const schema = yup.object().shape({
     username: yup.string().required('Username is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
-    password: yup.string().required('Password must be at least 6 characters'),
+    password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
 });
 
 interface SignupForm {
@@ -30,16 +30,27 @@ const Signup = () => {
     const onSubmit = async (data: SignupForm) => {
         try {
             setLoading(true);
-            const response = await axios.post('https://codsoft-e-commerce-website-server.onrender.com/auth/signup', data);
+            const response = await axios.post(
+                'https://codsoft-e-commerce-website-server.onrender.com/auth/signup',
+                data
+            );
 
-            toast.success('Signup successful! Redirecting to login...', {
+            // Use the message from the response to display success toast
+            const successMessage = response.data?.message || 'Signup successful! Redirecting to login...';
+            toast.success(successMessage, {
                 autoClose: 2000, // Toast duration
             });
-            console.log(response);
+
+            // Redirect to login after a short delay
             setTimeout(() => navigate('/login'), 2000);
         } catch (error) {
-            console.error(error)
-            toast.error("Sorry something went wrong please try again", {
+            let errorMessage = "Sorry, something went wrong. Please try again.";
+
+            if (axios.isAxiosError(error) && error.response) {
+                errorMessage = error.response.data?.message || errorMessage;
+            }
+
+            toast.error(errorMessage, {
                 autoClose: 5000,
             });
         } finally {
@@ -69,7 +80,7 @@ const Signup = () => {
                             />
                             {errors.email && <p className="text-red-500 mt-1">{errors.email.message}</p>}
                         </div>
-                        <div className="mb-4"> {/* Fixed typo */}
+                        <div className="mb-4">
                             <label className="block mb-1">Password</label>
                             <input
                                 type="password"
@@ -80,7 +91,7 @@ const Signup = () => {
                         </div>
                         <button
                             type="submit"
-                            className="w-full bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-700"
+                            className="w-full bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700"
                             disabled={isSubmitting || loading}
                         >
                             {loading ? <BiLoaderAlt className="animate-spin inline-block mr-2" /> : 'Submit'}
@@ -91,7 +102,6 @@ const Signup = () => {
                         <Link to="/login" className="text-blue-500">Login here</Link>
                     </p>
                 </div>
-
             </div>
         </>
     );
