@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
                     console.error("Token not found: PLEASE LOGIN FIRST!");
                     return;
                 }
-                const response = await axios.get('http://localhost:4000/auth/user-details', {
+                const response = await axios.get('https://codsoft-e-commerce-website-server.vercel.app/auth/user-details', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -82,7 +82,7 @@ const Navbar: React.FC = () => {
                 console.error('Token not found: PLEASE LOGIN FIRST!');
                 return;
             }
-            await axios.post('http://localhost:4000/auth/logout', {}, {
+            await axios.post('https://codsoft-e-commerce-website-server.vercel.app/auth/logout', {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -124,7 +124,7 @@ const Navbar: React.FC = () => {
                                     <button onClick={() => {
                                         handleLogout()
                                         closeMenu()
-                                    }} className="bg-transparent lg:hidden  hover:bg-gray-600 text-white font-semibold hover:text-white py-1 px-2 border border-white rounded">
+                                    }} className="bg-transparent lg:hidden bg-red-500 hover:bg-gray-600 text-white font-semibold hover:text-white py-1 px-2 border border-white rounded">
                                         Logout
                                     </button>
                                 )
