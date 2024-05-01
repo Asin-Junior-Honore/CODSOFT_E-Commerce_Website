@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { FaTrash, FaSpinner } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const CartPage: React.FC = () => {
     const [cartProducts, setCartProducts] = useState<any[] | null>(null);
@@ -10,6 +11,11 @@ const CartPage: React.FC = () => {
     const [totalPrice, setTotalPrice] = useState<number | null>(null);
     const [paymentLoading, setPaymentLoading] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
+    const [totalCost, setTotalCost] = useState<number | null>(null);
+    const SHIPPING_COST = 10.0;
+    const TAX_RATE = 0.08;
+
+    ///useeffect to fetch all products from userss cart
     useEffect(() => {
         const fetchCartProducts = async () => {
             try {
@@ -34,13 +40,19 @@ const CartPage: React.FC = () => {
         fetchCartProducts();
     }, [cookies.token]);
 
+
     useEffect(() => {
         if (cartProducts !== null) {
             const totalPriceSum = cartProducts.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
             setTotalPrice(totalPriceSum);
+            const tax = totalPriceSum * TAX_RATE;
+            const finalCost = totalPriceSum + tax + SHIPPING_COST;
+            setTotalCost(finalCost);
         }
     }, [cartProducts]);
 
+
+    // Logic to delete one product
     const handleDeleteProduct = async (productId: number) => {
         try {
             const token = cookies.token;
@@ -48,19 +60,24 @@ const CartPage: React.FC = () => {
                 console.error('Token not found');
                 return;
             }
+
             await axios.delete(`https://codsoft-e-commerce-website-server.onrender.com/auth/cart/${productId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
+
             if (cartProducts !== null) {
                 setCartProducts(cartProducts.filter(item => item.product.id !== productId));
+                toast.success('Product deleted from cart successfully');
             }
         } catch (error) {
             console.error('Error deleting product from cart:', error);
+            toast.error('An error occurred while deleting the product');
         }
     };
 
+    //logic to proceed payment
     const handleProceedToPayment = async () => {
         try {
             const token = cookies.token;
@@ -69,14 +86,14 @@ const CartPage: React.FC = () => {
                 return;
             }
 
-            if (usermail === "" || totalPrice === null) {
-                console.error('User email or total price not found');
+            if (usermail === "" || totalCost === null) {
+                console.error('User email or total cost not found');
                 return;
             }
 
             setPaymentLoading(true);
 
-            const amountInKobo = totalPrice * 1000;
+            const amountInKobo = totalCost * 100; // 100 Kobo per Naira
 
             const response = await axios.post(
                 'https://codsoft-e-commerce-website-server.onrender.com/auth/acceptpayment',
@@ -89,7 +106,6 @@ const CartPage: React.FC = () => {
                 }
             );
 
-            //console.log('Response Data:', response.data);
             setPaymentLoading(false);
 
             const authorizationUrl = response.data?.data?.authorization_url;
@@ -104,6 +120,8 @@ const CartPage: React.FC = () => {
         }
     };
 
+
+    //logic to delete all item
     const handleDeleteAll = async () => {
         try {
             const token = cookies.token;
@@ -122,6 +140,7 @@ const CartPage: React.FC = () => {
 
             setCartProducts([]);
             setTotalPrice(0);
+            setTotalCost(0);
             setLoadingDelete(false);
         } catch (error) {
             console.error('Error deleting all items from cart:', error);
@@ -182,9 +201,14 @@ const CartPage: React.FC = () => {
 
                     <div className="mt-8 proceedtopayment-logic">
                         {totalPrice !== null && (
-                            <p className="text-xl mb-5 font-semibold">Total Cost: ${totalPrice.toFixed(2)}</p>
+                            <>
+                                <p className="text-xl font-semibold">Subtotal: ${totalPrice.toFixed(2)}</p>
+                                <p className="text-xl font-semibold">Shipping Cost: ${SHIPPING_COST.toFixed(2)}</p>
+                                <p className="text-xl my-2 font-semibold">Tax (8%): ${(totalPrice * TAX_RATE).toFixed(2)}</p>
+                                <p className="text-xl font-semibold">Total Cost: ${totalCost?.toFixed(2)}</p>
+                            </>
                         )}
-                        <button onClick={handleProceedToPayment} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-full">
+                        <button onClick={handleProceedToPayment} className="bg-blue-500 text-white px-4 py-2 rounded-md lg:mt-2 mt-6 hover:bg-blue-600 w-full">
                             {paymentLoading ? 'Processing...' : 'Proceed to Payment'}
                         </button>
                     </div>
