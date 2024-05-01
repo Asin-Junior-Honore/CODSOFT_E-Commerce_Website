@@ -50,9 +50,9 @@ Follow these steps to set up the project locally:
 
 2. **Backend Setup**:
 
-   - Navigate to the backend folder:
+   - Navigate to the server folder:
      ```bash
-     cd backend
+     cd server
      ```
    - Install dependencies:
      ```bash
@@ -65,14 +65,14 @@ Follow these steps to set up the project locally:
      - `PAYSTACK_SECRET_KEY`: Your Paystack secret key.
    - Start the backend server:
      ```bash
-     npm start
+     npm run devStart
      ```
 
 3. **Frontend Setup**:
 
    - Navigate to the frontend folder:
      ```bash
-     cd ../frontend
+     cd client
      ```
    - Install dependencies:
      ```bash
@@ -80,7 +80,7 @@ Follow these steps to set up the project locally:
      ```
    - Start the frontend server:
      ```bash
-     npm start
+     npm rundev
      ```
 
 4. **Access the Application**:
@@ -107,7 +107,7 @@ The frontend is built with React and TypeScript. It has the following features:
 - **Components**:
   - `Navbar`: Navigation bar with links to different sections of the application.
   - `ProductList`: Displays a list of products.
-  - `ProductDetail`: Displays details of a single product.
+  - `Hompage`: Displays details of products (but note the products shuffles on every refresh).
   - `Cart`: Shows the user's shopping cart.
   - `Checkout`: Allows users to complete their purchase.
 - **Routes**:
@@ -151,7 +151,7 @@ Contributions are welcome! To contribute to this project, follow these steps:
 
 For questions or further information about this project, please contact:
 
-- **Email**: support@codsoft.com
-- **Website**: [www.codsoft.com](https://www.codsoft.com)
+- **Email**: asinhonore823@gmail.com
+- **Website**: ([text](https://asinhonore-mern-e-commerce-app-remote.netlify.app))
 
-Thank you for your interest in the Codsoft E-Commerce project! We hope you enjoy exploring and contributing to it. If you have any questions or feedback, don't hesitate to reach out. Happy coding! 🌟
+Thank you for your interest in my Codsoft E-Commerce internship project! I hope you enjoy exploring and contributing to it. If you have any questions or feedback, don't hesitate to reach out. Happy coding! 🌟
