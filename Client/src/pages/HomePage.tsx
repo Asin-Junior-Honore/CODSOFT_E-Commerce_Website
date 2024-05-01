@@ -36,19 +36,17 @@ const HomePage: React.FC = () => {
     }
     return array;
   };
-
   const handleAddToCart = async (product: DisplayedProduct) => {
     const { token } = cookies;
     if (token) {
       try {
         await addToCart(product, product.quantity, token);
-        toast.success(`${product.title} added to cart!`);
       } catch (error) {
-        toast.error(`Failed to add ${product.title} to cart.`);
       }
     } else {
-      toast.error('Please log in to add to cart.');
+      toast.error('You need to be logged in to add items to the cart');
     }
+
   };
 
   const handleIncrement = (index: number) => {
