@@ -3,6 +3,7 @@ import { AiOutlineShoppingCart, AiOutlineUser, AiOutlineMenu } from 'react-icons
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../contexts/CartContext';
 
 const CartIcon: React.FC<{ count: number }> = ({ count }) => (
     <Link to="/protected/cart" className="relative text-white hover:text-gray-300">
@@ -46,34 +47,11 @@ const UserIcon: React.FC<{ username: string; token: string; onLogout: () => void
 );
 
 const Navbar: React.FC = () => {
-    const [cartItems, setCartItems] = useState<number>(0);
-    const [username, setUsername] = useState<string>('');
+    const { cartCount, username } = useCart();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [cookies, _, removeCookie] = useCookies(['token']);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchUserDetails = async () => {
-            try {
-                const token = cookies.token;
-                if (!token) {
-                    console.error("Token not found: PLEASE LOGIN FIRST!");
-                    return;
-                }
-                const response = await axios.get('https://codsoft-e-commerce-website-server.onrender.com/auth/user-details', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                setUsername(response.data.username);
-                setCartItems(response.data.totalItemsInCart);
-            } catch (error) {
-                console.error('Error fetching user details:', error);
-            }
-        };
-
-        fetchUserDetails();
-    }, [cookies.token, navigate]);
 
     //logic to handle logout
     const handleLogout = async () => {
@@ -90,6 +68,7 @@ const Navbar: React.FC = () => {
             });
             removeCookie('token', { path: '/' })
             navigate('/login');
+            window.location.reload()
         } catch (error) {
             console.error('Logout error:', error);
         }
@@ -147,7 +126,7 @@ const Navbar: React.FC = () => {
                             }
 
                         </div>
-                        <CartIcon count={cartItems} />
+                        <CartIcon count={cartCount} />
                     </div>
                     <div className="flex items-center space-x-4">
                         <UserIcon username={username} onLogout={handleLogout} token={cookies.token} />

@@ -3,8 +3,10 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { FaTrash, FaSpinner } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useCart } from '../contexts/CartContext';
 
 const CartPage: React.FC = () => {
+    const { fetchUserDetails } = useCart();
     const [cartProducts, setCartProducts] = useState<any[] | null>(null);
     const [cookies] = useCookies(['token']);
     const [usermail, setUsermail] = useState("");
@@ -70,6 +72,7 @@ const CartPage: React.FC = () => {
             if (cartProducts !== null) {
                 setCartProducts(cartProducts.filter(item => item.product.id !== productId));
                 toast.success('Product deleted from cart successfully');
+                fetchUserDetails()
             }
         } catch (error) {
             console.error('Error deleting product from cart:', error);
@@ -139,6 +142,7 @@ const CartPage: React.FC = () => {
             setTotalPrice(0);
             setTotalCost(0);
             setLoadingDelete(false);
+            window.location.reload()
         } catch (error) {
             console.error('Error deleting all items from cart:', error);
             setLoadingDelete(false);
