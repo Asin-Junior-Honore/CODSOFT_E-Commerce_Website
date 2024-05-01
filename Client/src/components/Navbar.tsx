@@ -117,8 +117,8 @@ const Navbar: React.FC = () => {
                     <div className="flex items-center space-x-4 relative">
                         <div className={isMenuOpen ? 'absolute top-[2.6rem] z-20 right-[-5rem] flex  px-6 space-y-3 bg-gray-800 whitespace-nowrap py-5 rounded-md flex-col' : 'hidden lg:flex lg:space-x-3'}>
                             <Link to="/" className="text-white hover:text-gray-300" onClick={closeMenu}>Home</Link>
-                            <Link to="/products" className="text-white  hover:text-gray-300" onClick={closeMenu}>All Products</Link>
-                            <Link to="/cart" className="text-white  hover:text-gray-300" onClick={closeMenu}>My Cart</Link>
+                            <Link to="/protected/products" className="text-white  hover:text-gray-300" onClick={closeMenu}>All Products</Link>
+                            <Link to="/protected/cart" className="text-white  hover:text-gray-300" onClick={closeMenu}>My Cart</Link>
                             {
                                 cookies.token ? (
                                     <button

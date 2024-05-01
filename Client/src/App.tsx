@@ -10,12 +10,10 @@ import PrivateRoutes from './utils/PrivateRoutes';
 import Footer from './components/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import FeaturedImage from './components/FeaturedImage';
 const App: React.FC = () => {
   return (
     <div>
       <Router>
-        <FeaturedImage />
         <Navbar />
         <ToastContainer
           position="top-right"
@@ -29,12 +27,14 @@ const App: React.FC = () => {
         <div className='bg-gray-200'>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route element={<PrivateRoutes />}>
-              <Route path="/products" element={<ProductsPage />} />
-              <Route path="/cart" element={<CartPage />} />
-            </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<Signup />} />
+
+            <Route path='/protected' element={<PrivateRoutes />}>
+              <Route path="products" element={<ProductsPage />} />
+              <Route path="cart" element={<CartPage />} />
+            </Route>
+
           </Routes>
         </div>
         <Footer />

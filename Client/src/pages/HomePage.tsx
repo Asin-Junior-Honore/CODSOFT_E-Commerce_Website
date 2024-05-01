@@ -5,8 +5,8 @@ import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import hero_image from "../assets/mern-landingpage-hero.jpg"
-import { FaSpinner } from 'react-icons/fa';
+import hero_image from '../assets/mern-landingpage-hero.jpg';
+import { FaSpinner, FaStar } from 'react-icons/fa';
 
 interface DisplayedProduct extends Product {
   quantity: number;
@@ -42,11 +42,11 @@ const HomePage: React.FC = () => {
     if (token) {
       try {
         await addToCart(product, product.quantity, token);
+        toast.success(`${product.title} added to cart!`);
       } catch (error) {
         toast.error(`Failed to add ${product.title} to cart.`);
       }
     } else {
-      console.error('Token not found');
       toast.error('Please log in to add to cart.');
     }
   };
@@ -61,8 +61,8 @@ const HomePage: React.FC = () => {
     const updatedProducts = [...displayedProducts];
     if (updatedProducts[index].quantity > 1) {
       updatedProducts[index].quantity--;
-      setDisplayedProducts(updatedProducts);
     }
+    setDisplayedProducts(updatedProducts);
   };
 
   return (
@@ -79,7 +79,7 @@ const HomePage: React.FC = () => {
               <div className="text-white max-w-4xl mx-auto text-center">
                 <h1 className="text-5xl font-bold mb-4">Welcome to Our Online Store</h1>
                 <p className="text-lg text-gray-200 mb-8">Discover the latest trends in fashion, electronics, jewelry, and more.</p>
-                <Link to="/products">
+                <Link to="/protected/products">
                   <button className="bg-gray-900 text-white px-8 py-4 rounded-lg hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50">
                     Explore Now
                   </button>
@@ -89,6 +89,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
       <section className="container mx-auto py-12 px-3">
         <h1 className="text-3xl font-bold mb-8">Featured Products</h1>
         <div>
@@ -107,9 +108,19 @@ const HomePage: React.FC = () => {
                   <div className="lg:w-[400px] h-[400px]">
                     <img src={product.image} alt={product.title} className="w-full h-full" />
                   </div>
+
                   <div className="p-4">
                     <h2 className="text-lg font-semibold">{product.title}</h2>
-                    <p className="text-gray-800 font-bold text-xl mt-2">${product.price.toFixed(2)}</p>
+                    {/* Star Rating */}
+                    <div className="flex items-center justify-between">
+                      <p className="text-gray-800 font-bold text-xl mt-2">${product.price.toFixed(2)}</p>
+                      <p className='flex'>
+                        {[...Array(Math.floor(product.rating.rate))].map((_, i) => (
+                          <FaStar key={i} className="text-yellow-400" />
+                        ))}
+                      </p>
+                    </div>
+
                     <div className="flex justify-between items-center mt-4">
                       <button
                         className={`bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 ${!cookies.token ? 'cursor-not-allowed opacity-50' : ''

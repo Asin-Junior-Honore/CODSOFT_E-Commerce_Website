@@ -143,7 +143,6 @@ const CartPage: React.FC = () => {
                     <FaTrash className="w-8 h-8 ml-2" />
                 </div>
             ) : (
-
                 <div>
                     <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mapping-userscart">
                         {cartProducts.map((item, index) => (
