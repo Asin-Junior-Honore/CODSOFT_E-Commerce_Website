@@ -43,12 +43,12 @@ const LoginPage: React.FC = () => {
 
       const { token, message } = response.data; // Extract token and message from response
       setCookie('token', token, { path: '/' }); // Store token in cookies
-      
+
       // Show success message
       toast.success(message || 'Login successful! Redirecting...', {
         autoClose: 2000,
       });
-      
+
       setTimeout(() => navigate('/'), 2000); // Redirect to homepage after 2 seconds
     } catch (error: unknown) {
       let errorMessage = "Login failed. Please check your credentials and try again.";
@@ -74,34 +74,30 @@ const LoginPage: React.FC = () => {
       <div className="w-[28rem] mx-auto bg-white p-4 border rounded-lg shadow-md">
         <h2 className="text-center text-2xl font-semibold mb-4">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-4 relative"> {/* Add relative positioning for the eye icon */}
+          <div className="mb-4 relative">
             <input
               {...register('username')}
               placeholder="Username"
               type="text"
-              className="w-full px-4 py-2 rounded border bg-gray-100"
-              focus:outline-none
-              focus:border-blue-500
+              className="w-full px-4 py-2 rounded border bg-gray-100  focus:outline-none focus:border-blue-500"
             />
             {errors.username && (
               <p className="text-red-500 mt-1">{errors.username.message}</p>
             )}
           </div>
-          <div className="mb-4 relative"> {/* Update for password visibility toggle */}
+          <div className="mb-4 relative">
             <input
               {...register('password')}
               placeholder="Password"
-              type={passwordVisible ? 'text' : 'password'} // Toggle field type based on visibility state
-              className="w-full px-4 py-2 rounded border bg-gray-100"
-              focus:outline-none
-              focus:border-blue-500
+              type={passwordVisible ? 'text' : 'password'}
+              className="w-full px-4 py-2 rounded border bg-gray-100 focus:outline-none focus:border-blue-500"
             />
             <button
               type="button"
               onClick={togglePasswordVisibility}
               className="absolute top-1/2 right-2 transform -translate-y-1/2 text-blue-500 text-2xl"
             >
-              {passwordVisible ? <AiOutlineEye />   :   <AiOutlineEyeInvisible />}
+              {passwordVisible ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
             </button>
             {errors.password && (
               <p className="text-red-500 mt-1">{errors.password.message}</p>
@@ -109,8 +105,7 @@ const LoginPage: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-gray-900 text-white py-2 px-4 rounded"
-            hover:bg-blue-700
+            className="w-full bg-gray-900 text-white py-2 px-4 rounded  hover:bg-blue-700"
             disabled={isSubmitting || loading}
           >
             {loading ? <BiLoaderAlt className="animate-spin inline-block mr-2" /> : 'Login'}
