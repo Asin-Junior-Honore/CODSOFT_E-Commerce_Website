@@ -45,7 +45,7 @@ Follow these steps to set up the project locally:
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/your-username/codsoft-ecommerce.git
+   https://github.com/Asin-Junior-Honore/CODSOFT_E-Commerce_Website.git
    ```
 
 2. **Backend Setup**:
@@ -95,7 +95,7 @@ The backend is built with Express.js and uses MongoDB for data storage. It has t
   - `/auth`: Routes for user authentication (signup, login, logout).
   - `/products`: Routes for product management.
   - `/cart`: Routes for managing the shopping cart.
-  - `/orders`: Routes for handling orders and payments.
+  - `/orders`: Routes for handling orders and payments and more.
 - **Middleware**:
   - `authMiddleware`: Ensures requests are authenticated with a valid JWT.
 - **Error Handling**: Centralized error handling to ensure clear error messages.
@@ -115,7 +115,7 @@ The frontend is built with React and TypeScript. It has the following features:
   - `/login`: User login page.
   - `/signup`: User signup page.
   - `/cart`: User's shopping cart.
-  - `/checkout`: Checkout page.
+  - `/checkout`: Checkout page and more.
 - **State Management**: Managed using React's built-in state management.
 
 ## Payment Integration 💳
@@ -152,6 +152,6 @@ Contributions are welcome! To contribute to this project, follow these steps:
 For questions or further information about this project, please contact:
 
 - **Email**: asinhonore823@gmail.com
-- **Website**: ([text](https://asinhonore-mern-e-commerce-app-remote.netlify.app))
+- **Website**: (https://asinhonore-mern-e-commerce-app-remote.netlify.app)
 
-Thank you for your interest in my Codsoft E-Commerce internship project! I hope you enjoy exploring and contributing to it. If you have any questions or feedback, don't hesitate to reach out. Happy coding! 🌟
+Thank you for your interest in my Codsoft E-Commerce internship project solution! I hope you enjoy exploring and contributing to it. If you have any questions or feedback, don't hesitate to reach out. Happy coding! 🌟
