@@ -75,6 +75,7 @@ const Navbar: React.FC = () => {
         fetchUserDetails();
     }, [cookies.token, navigate]);
 
+    //logic to handle logout
     const handleLogout = async () => {
         try {
             const token = cookies.token;
@@ -94,6 +95,7 @@ const Navbar: React.FC = () => {
         }
     };
 
+    //add overflowy to window when  nav is
     useEffect(() => {
         if (isMenuOpen) {
             document.body.style.overflow = 'hidden';

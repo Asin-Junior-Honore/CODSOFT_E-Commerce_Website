@@ -92,9 +92,7 @@ const CartPage: React.FC = () => {
             }
 
             setPaymentLoading(true);
-
-            const amountInKobo = totalCost * 100; // 100 Kobo per Naira
-
+            const amountInKobo = totalCost * 1000;
             const response = await axios.post(
                 'https://codsoft-e-commerce-website-server.onrender.com/auth/acceptpayment',
                 { email: usermail, amount: amountInKobo },
@@ -105,9 +103,8 @@ const CartPage: React.FC = () => {
                     },
                 }
             );
-
+            //console.log(response)
             setPaymentLoading(false);
-
             const authorizationUrl = response.data?.data?.authorization_url;
             if (authorizationUrl) {
                 window.open(authorizationUrl, '_blank');
@@ -201,12 +198,12 @@ const CartPage: React.FC = () => {
 
                     <div className="mt-8 proceedtopayment-logic">
                         {totalPrice !== null && (
-                            <>
+                            <div className='space-y-3'>
                                 <p className="text-xl font-semibold">Subtotal: ${totalPrice.toFixed(2)}</p>
                                 <p className="text-xl font-semibold">Shipping Cost: ${SHIPPING_COST.toFixed(2)}</p>
-                                <p className="text-xl my-2 font-semibold">Tax (8%): ${(totalPrice * TAX_RATE).toFixed(2)}</p>
+                                <p className="text-xl font-semibold">Tax (8%): ${(totalPrice * TAX_RATE).toFixed(2)}</p>
                                 <p className="text-xl font-semibold">Total Cost: ${totalCost?.toFixed(2)}</p>
-                            </>
+                            </div>
                         )}
                         <button onClick={handleProceedToPayment} className="bg-blue-500 text-white px-4 py-2 rounded-md lg:mt-2 mt-6 hover:bg-blue-600 w-full">
                             {paymentLoading ? 'Processing...' : 'Proceed to Payment'}
