@@ -95,7 +95,7 @@ const Navbar: React.FC = () => {
         }
     };
 
-    //add overflowy to window when  nav is
+    //add overflowy to window when nav is toggle
     useEffect(() => {
         if (isMenuOpen) {
             document.body.style.overflow = 'hidden';
