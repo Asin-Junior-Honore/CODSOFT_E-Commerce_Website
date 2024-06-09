@@ -56,7 +56,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 return;
             }
             const response = await axios.get(
-                'https://codsoft-e-commerce-website-server.onrender.com/auth/user-details',
+                'https://codsoft-e-commerce-website-nine.vercel.app/auth/user-details',
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -79,7 +79,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         try {
             const { id, title, image, price } = product;
             await axios.post(
-                'https://codsoft-e-commerce-website-server.onrender.com/auth/cart/add',
+                'https://codsoft-e-commerce-website-nine.vercel.app/auth/cart/add',
                 {
                     productId: id,
                     quantity,
@@ -106,7 +106,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const updateCartItem = async (productId: number, quantity: number, token: string) => {
         try {
             await axios.patch(
-                `https://codsoft-e-commerce-website-server.onrender.com/auth/cart/update/${productId}`,
+                `https://codsoft-e-commerce-website-nine.vercel.app/auth/cart/update/${productId}`,
                 { quantity },
                 {
                     headers: {
