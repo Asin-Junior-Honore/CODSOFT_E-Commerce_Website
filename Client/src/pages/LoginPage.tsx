@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { useCookies } from 'react-cookie';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import { BiLoaderAlt } from 'react-icons/bi';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { BiLoaderAlt } from "react-icons/bi";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const schema = yup.object().shape({
-  username: yup.string().required('Username is required'),
-  password: yup.string().required('Password is required'),
+  username: yup.string().required("Username is required"),
+  password: yup.string().required("Password is required"),
 });
 
 interface LoginForm {
@@ -21,9 +21,13 @@ interface LoginForm {
 }
 
 const LoginPage: React.FC = () => {
-  const [_, setCookie] = useCookies(['token']);
+  const [_, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginForm>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginForm>({
     resolver: yupResolver(schema),
   });
   const [loading, setLoading] = useState(false);
@@ -37,26 +41,27 @@ const LoginPage: React.FC = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        'https://codsoft-e-commerce-website-nine.vercel.app/auth/login',
+        "https://codsoft-e-commerce-website-nine.vercel.app/auth/login",
         data
       );
 
       const { token, message } = response.data; // Extract token and message from response
-      setCookie('token', token, { path: '/' }); // Store token in cookies
+      setCookie("token", token, { path: "/" }); // Store token in cookies
 
       // Show success message
-      toast.success(message || 'Login successful! Redirecting...', {
+      toast.success(message || "Login successful! Redirecting...", {
         autoClose: 2000,
       });
 
-      setTimeout(() => navigate('/'), 2000); // Redirect to homepage after 2 seconds
+      setTimeout(() => navigate("/"), 2000); // Redirect to homepage after 2 seconds
     } catch (error: unknown) {
-      let errorMessage = "Login failed. Please check your credentials and try again.";
+      let errorMessage =
+        "Login failed. Please check your credentials and try again.";
 
       if (axios.isAxiosError(error) && error.response) {
         if (error.response.data?.message) {
           errorMessage = error.response.data.message;
-        } else if (typeof error.response.data === 'string') {
+        } else if (typeof error.response.data === "string") {
           errorMessage = error.response.data;
         }
       }
@@ -76,7 +81,7 @@ const LoginPage: React.FC = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4 relative">
             <input
-              {...register('username')}
+              {...register("username")}
               placeholder="Username"
               type="text"
               className="w-full px-4 py-2 rounded border bg-gray-100  focus:outline-none focus:border-blue-500"
@@ -87,9 +92,9 @@ const LoginPage: React.FC = () => {
           </div>
           <div className="mb-4 relative">
             <input
-              {...register('password')}
+              {...register("password")}
               placeholder="Password"
-              type={passwordVisible ? 'text' : 'password'}
+              type={passwordVisible ? "text" : "password"}
               className="w-full px-4 py-2 rounded border bg-gray-100 focus:outline-none focus:border-blue-500"
             />
             <button
@@ -108,12 +113,18 @@ const LoginPage: React.FC = () => {
             className="w-full bg-gray-900 text-white py-2 px-4 rounded  hover:bg-blue-700"
             disabled={isSubmitting || loading}
           >
-            {loading ? <BiLoaderAlt className="animate-spin inline-block mr-2" /> : 'Login'}
+            {loading ? (
+              <BiLoaderAlt className="animate-spin inline-block mr-2" />
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
         <p className="mt-4 text-center">
-          Don't have an account?{' '}
-          <Link to="/signup" className="text-blue-500">Signup here</Link>
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-blue-500">
+            Signup here
+          </Link>
         </p>
       </div>
     </div>
