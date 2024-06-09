@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
                 console.error('Token not found: PLEASE LOGIN FIRST!');
                 return;
             }
-            await axios.post('https://codsoft-e-commerce-website-server.onrender.com/auth/logout', {}, {
+            await axios.post('https://codsoft-e-commerce-website-nine.vercel.app/auth/logout', {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
