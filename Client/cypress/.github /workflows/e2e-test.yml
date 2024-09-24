@@ -6,12 +6,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
+     
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          # to run component tests we need to use "cypress run-ct"
+        
           command: npx cypress run
 
      
