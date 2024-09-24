@@ -25,6 +25,5 @@ jobs:
         run: npm start &  
 
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v5
-        with:
-          command: npx cypress run
+        working-directory: ./Client  
+        run: npx cypress run 
