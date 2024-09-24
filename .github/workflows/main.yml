@@ -1,10 +1,9 @@
-name: ci
+name: e2e-tests
 on: [push]
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-20.04
-
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -14,10 +13,17 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Navigate to Client and Install Dependencies
+      - name: Navigate to client directory
+        working-directory: ./Client  
+        run: echo "Navigating to Client directory"
+
+      - name: Install dependencies
         working-directory: ./Client 
-        run: |
-          npm install  # Install dependencies
+        run: npm install  
+
+      - name: Start application
+        working-directory: ./Client
+        run: npm start &
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
