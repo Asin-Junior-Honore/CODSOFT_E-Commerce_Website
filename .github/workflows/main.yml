@@ -1,9 +1,10 @@
-name: e2e-tests
+name: ci
 on: [push]
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -13,22 +14,13 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Navigate to client directory
+      - name: Navigate to Client and Install Dependencies
         working-directory: ./Client 
-        run: echo "Navigating to Client directory"
-
-      - name: Install dependencies
-        working-directory: ./Client 
-        run: npm install  
-
-      - name: Start application
-        working-directory: ./Client 
-        run: npm start &  
-
-      - name: Wait for the server to start
-        run: sleep 15 
+        run: |
+          npm install  # Install dependencies
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          spec: cypress/e2e/login.cy.js
+          command: npx cypress run
+        
