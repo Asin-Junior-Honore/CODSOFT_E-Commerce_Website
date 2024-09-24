@@ -4,6 +4,7 @@ on: [push]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -11,22 +12,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
-
-      - name: Navigate to client directory
-        working-directory: ./Client  
-        run: echo "Navigating to Client directory"
+          node-version: '16' 
 
       - name: Install dependencies
-        working-directory: ./Client 
-        run: npm install  
+        working-directory: ./Client  
+        run: npm ci  
 
       - name: Start application
         working-directory: ./Client
-        run: npm start &
+        run: npm start &  
 
-      - name: Cypress run
+      - name: Run Cypress tests
         uses: cypress-io/github-action@v5
         with:
           command: npx cypress run
+      
+
         
